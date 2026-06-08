@@ -173,6 +173,28 @@ The Citedy SEO Agent provides a simple yet powerful workflow for creating and di
 
 This entire process can be automated with cron-based sessions, allowing you to create a set-and-forget content machine that works for you 24/7.
 
+## Optional X/Twitter Source Context
+
+OpenClaw users who already use
+[TweetClaw](https://github.com/Xquik-dev/tweetclaw) can pass a reviewed
+X/Twitter source pack into Citedy before running trend scouting, article
+generation, or social adaptation. This is useful when the brief depends on
+specific tweet URLs, reply excerpts, public metrics, user lookup notes,
+follower-export summaries, media references, monitor snapshots, or webhook
+events.
+
+```bash
+openclaw plugins install npm:@xquik/tweetclaw
+```
+
+Treat TweetClaw output as source material only. Citedy remains responsible for
+topic selection, article generation, social adaptations, publishing, scheduling,
+webhooks, and analytics. Keep TweetClaw write-like actions such as posts,
+replies, DMs, follows, media uploads, monitor creation, and giveaway draws in
+the TweetClaw/OpenClaw approval flow, and do not paste API keys, cookies,
+browser profiles, or raw session material into prompts, logs, issues, or
+commits.
+
 ---
 
 ## The Citedy Advantage
