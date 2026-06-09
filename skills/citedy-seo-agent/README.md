@@ -1,10 +1,10 @@
 # citedy-seo-agent
 
-> Full-stack AI marketing toolkit — trend scouting, competitor analysis, SEO articles in 55 languages, social distribution, AI UGC viral videos, lead magnets, content ingestion, and fully automated autopilot.
+> Full-stack AI marketing toolkit — trend scouting, competitor analysis, SEO articles in 55 languages, social distribution, AI UGC viral videos, lead magnets, warm lead account reports, content ingestion, and fully automated autopilot.
 
 ## What It Does
 
-The Citedy SEO Agent is the complete content marketing suite in a single skill. It covers every stage of the content workflow: discover trending topics on X/Twitter and Reddit, deep-analyze competitors and find content gaps, generate SEO- and GEO-optimized articles with AI illustrations and voice-over in 55 languages, adapt content for 9 social platforms, create short-form AI UGC viral videos for TikTok and Reels, generate PDF lead magnets (checklists, swipe files, frameworks), ingest YouTube videos and PDFs into structured content, and run fully automated cron-based publishing sessions.
+The Citedy SEO Agent is the complete content marketing suite in a single skill. It covers every stage of the content workflow: discover trending topics on X/Twitter and Reddit, deep-analyze competitors and find content gaps, generate SEO- and GEO-optimized articles with AI illustrations and voice-over in 55 languages, adapt content for 9 social platforms, create short-form AI UGC viral videos for TikTok and Reels, generate PDF lead magnets (checklists, swipe files, frameworks), turn company domains into warm lead account reports, ingest YouTube videos and PDFs into structured content, and run fully automated cron-based publishing sessions.
 
 ## Install
 
@@ -84,6 +84,7 @@ npx openskills install Citedy/citedy-seo-agent
 | Content ingestion (YouTube)       | 5–55 credits        |
 | Lead magnet (text-only)           | 30 credits          |
 | Lead magnet (with images)         | 100 credits         |
+| Warm lead report                  | 40 credits          |
 
 1 credit = $0.01 USD. New accounts get **100 free credits** — no credit card required.
 
@@ -99,6 +100,7 @@ Looking for a specific capability? Each focused skill is a standalone entry poin
 | [citedy-content-ingestion](../citedy-content-ingestion/) | Turn any URL into structured content (YouTube, PDF, audio) |
 | [citedy-trend-scout](../citedy-trend-scout/)             | Scout X/Reddit trends + content gaps + competitors         |
 | [citedy-lead-magnets](../citedy-lead-magnets/)           | Generate checklists, swipe files, frameworks               |
+| [citedy-warm-lead](../citedy-warm-lead/)                 | Warm account report from one company domain                |
 | [citedy-content-writer](../citedy-content-writer/)       | End-to-end blog autopilot with social distribution         |
 
 ## Compatible Platforms

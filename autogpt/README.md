@@ -1,12 +1,12 @@
 # Citedy SEO Agent for AutoGPT
 
-v3.1.0 — Full API coverage with 19 importable templates.
+v3.7.0 — Full API coverage with 19 importable templates and warm lead account reports.
 
 ## What You Get
 
 - `agents/*.agent.json` — 19 importable AutoGPT templates
 - `agents/manifest.json` — template index
-- `actions.json` — 49 endpoint/action reference with pricing
+- `actions.json` — 72 endpoint/action reference with pricing
 - `validate-templates.mjs` — local integrity validator
 - `QUICKSTART.md` — fast operator onboarding
 
@@ -54,6 +54,12 @@ v3.1.0 — Full API coverage with 19 importable templates.
 
 - `citedy-lead-magnet.agent.json` — Generate PDF lead magnet (30-100 credits)
 
+### Warm Leads
+
+- `warm_lead_start` — Start a warm lead report from one company domain (40 credits)
+- `warm_lead_get` — Poll run status and read the canonical JSON result
+- `warm_lead_export` — Export JSON, CSV, or Excel `.xlsx`
+
 ### Short-Form Video (Shorts Pipeline)
 
 - `citedy-shorts-script.agent.json` — Generate speech script (1 credits)
@@ -89,6 +95,7 @@ Validator now checks:
 - `manifest.json` <-> `agents/*.agent.json` consistency
 - `actions.json` template references
 - critical endpoints presence in `actions.json` (including `GET /api/agent/status`)
+- warm lead start/get/export actions and pricing
 
 ## Notes
 

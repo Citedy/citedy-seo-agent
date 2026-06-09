@@ -4,7 +4,7 @@
   <img width="380" height="200" src="https://glama.ai/mcp/servers/@Citedy/citedy-seo-agent/badge" />
 </a>
 
-> **citedy-seo-agent** is an Agent Skill that connects your AI agent to the Citedy platform, transforming it into a complete SEO content marketing team. From trend scouting and competitor analysis to generating high-quality, multilingual articles with AI-powered illustrations and voice-overs, creating short-form AI UGC viral videos with subtitles, ingesting YouTube videos, PDFs, and audio into structured content, generating lead magnets, and managing webhooks — this skill automates your entire content workflow.
+> **citedy-seo-agent** is an Agent Skill that connects your AI agent to the Citedy platform, transforming it into a complete SEO content marketing team. From trend scouting and competitor analysis to generating high-quality, multilingual articles with AI-powered illustrations and voice-overs, creating short-form AI UGC viral videos with subtitles, ingesting YouTube videos, PDFs, and audio into structured content, generating lead magnets, creating warm lead account reports, and managing webhooks — this skill automates your entire content workflow.
 
 ## Effortless SEO Content Creation. At Scale.
 
@@ -12,23 +12,24 @@ The Citedy SEO Agent is designed for developers, marketers, and AI enthusiasts w
 
 ## Key Features
 
-| Feature                     | Description                                                                                                                                   |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Auto-Publishing**         | Article/post adaptations are auto-published to **LinkedIn, X (article + thread), Facebook, Reddit, Instagram, and YouTube Shorts** — 7 platforms total. Threads and Instagram Reels require an explicit `/api/agent/publish` call after adaptation. TikTok is supported via `/api/agent/shorts/publish` for short-form video. Publishing is free across all platforms.                    |
-| **Trend Scouting**          | Discover what's trending on X/Twitter and Reddit to create timely and relevant content.                                                       |
-| **Competitor Analysis**     | Deep-analyze competitor domains to identify content gaps and opportunities.                                                                   |
-| **Deep SEO Scan**           | Run fast/deep/ultra/ultra+ scans with AI-powered search analysis and actionable recommendations.                                              |
-| **Article Generation**      | Generate SEO-optimized articles in 55 languages, from mini-articles to pillar posts. Draft mode for review before publishing.                 |
-| **Article Management**      | Publish, unpublish, and delete articles via API — full lifecycle control for regulated industries.                                            |
-| **AI-Powered Enhancements** | Add AI-generated illustrations and voice-over narration to your articles.                                                                     |
-| **Social Media Adaptation** | Adapt articles for X, LinkedIn, Facebook, Reddit, Threads, Instagram, Instagram Reels, YouTube Shorts, and Shopify.                           |
-| **Direct Publish**          | Publish article content as-is to LinkedIn, Facebook, X, Reddit, and Instagram — no AI adaptation, 0 credits.                                  |
-| **AI UGC Viral Videos**     | Generate short-form AI UGC viral videos (5s/10s/15s) with subtitles. Direct publish to Instagram Reels, YouTube Shorts, and TikTok — publishing is free across all platforms.                |
-| **Content Ingestion**       | Extract content from YouTube videos, web articles, PDFs, and audio files into structured summaries.                                           |
-| **Lead Magnets**            | Generate checklists, swipe files, and frameworks for lead capture — from 30 credits.                                                          |
-| **GSC Reports**             | Google Search Console performance reports — clicks, impressions, positions, movers, opportunities, article suggestions. 0 credits.            |
-| **Webhooks**                | Get notified on article generation, publishing, scout results, lead magnets, billing events, and more (15 event types).                       |
-| **Content Automation**      | Set up cron-based sessions to generate and publish articles on a recurring schedule.                                                          |
+| Feature                     | Description                                                                                                                                                                                                                                                                                                                                                            |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Auto-Publishing**         | Article/post adaptations are auto-published to **LinkedIn, X (article + thread), Facebook, Reddit, Instagram, and YouTube Shorts** — 7 platforms total. Threads and Instagram Reels require an explicit `/api/agent/publish` call after adaptation. TikTok is supported via `/api/agent/shorts/publish` for short-form video. Publishing is free across all platforms. |
+| **Trend Scouting**          | Discover what's trending on X/Twitter and Reddit to create timely and relevant content.                                                                                                                                                                                                                                                                                |
+| **Competitor Analysis**     | Deep-analyze competitor domains to identify content gaps and opportunities.                                                                                                                                                                                                                                                                                            |
+| **Deep SEO Scan**           | Run fast/deep/ultra/ultra+ scans with AI-powered search analysis and actionable recommendations.                                                                                                                                                                                                                                                                       |
+| **Article Generation**      | Generate SEO-optimized articles in 55 languages, from mini-articles to pillar posts. Draft mode for review before publishing.                                                                                                                                                                                                                                          |
+| **Article Management**      | Publish, unpublish, and delete articles via API — full lifecycle control for regulated industries.                                                                                                                                                                                                                                                                     |
+| **AI-Powered Enhancements** | Add AI-generated illustrations and voice-over narration to your articles.                                                                                                                                                                                                                                                                                              |
+| **Social Media Adaptation** | Adapt articles for X, LinkedIn, Facebook, Reddit, Threads, Instagram, Instagram Reels, YouTube Shorts, and Shopify.                                                                                                                                                                                                                                                    |
+| **Direct Publish**          | Publish article content as-is to LinkedIn, Facebook, X, Reddit, and Instagram — no AI adaptation, 0 credits.                                                                                                                                                                                                                                                           |
+| **AI UGC Viral Videos**     | Generate short-form AI UGC viral videos (5s/10s/15s) with subtitles. Direct publish to Instagram Reels, YouTube Shorts, and TikTok — publishing is free across all platforms.                                                                                                                                                                                          |
+| **Content Ingestion**       | Extract content from YouTube videos, web articles, PDFs, and audio files into structured summaries.                                                                                                                                                                                                                                                                    |
+| **Lead Magnets**            | Generate checklists, swipe files, and frameworks for lead capture — from 30 credits.                                                                                                                                                                                                                                                                                   |
+| **Warm Lead Reports**       | Turn one company domain into account signals, buyer-role candidates, scoring, evidence-grounded drafts, and JSON/CSV/XLSX export — 40 credits.                                                                                                                                                                                                                         |
+| **GSC Reports**             | Google Search Console performance reports — clicks, impressions, positions, movers, opportunities, article suggestions. 0 credits.                                                                                                                                                                                                                                     |
+| **Webhooks**                | Get notified on article generation, publishing, scout results, lead magnets, billing events, and more (15 event types).                                                                                                                                                                                                                                                |
+| **Content Automation**      | Set up cron-based sessions to generate and publish articles on a recurring schedule.                                                                                                                                                                                                                                                                                   |
 
 ## Who Is This For?
 
@@ -113,7 +114,7 @@ This skill follows the open [Agent Skills](https://docs.claude.com/en/docs/agent
 - `SKILL.md` — canonical Agent Skill definition (OpenClaw/Agent Skills/TinyClaw)
 - `TINYCLAW.md` — TinyClaw install and verification guide
 - `autogpt/` — AutoGPT package (actions, templates, validator, quickstart)
-- `skills/` — focused skills for specific use cases (video, ingestion, trends, lead magnets, writing)
+- `skills/` — focused skills for specific use cases (video, ingestion, trends, lead magnets, warm leads, writing)
 - `cursor/` — Cursor IDE plugin (manifest, MCP config, .mdc rules)
 - `windsurf/` — Windsurf IDE integration (MCP config, rules)
 
@@ -127,6 +128,7 @@ Looking for a specific capability? Each focused skill is a standalone entry poin
 | [citedy-content-ingestion](./skills/citedy-content-ingestion/) | Turn any URL into structured content (YouTube, PDF, audio) | 1–55/URL      |
 | [citedy-trend-scout](./skills/citedy-trend-scout/)             | Scout X/Reddit trends + content gaps + competitors         | 20–70/scan    |
 | [citedy-lead-magnets](./skills/citedy-lead-magnets/)           | Generate checklists, swipe files, frameworks               | 30–100/magnet |
+| [citedy-warm-lead](./skills/citedy-warm-lead/)                 | Warm account report from one company domain                | 40/report     |
 | [citedy-content-writer](./skills/citedy-content-writer/)       | End-to-end blog autopilot with social distribution         | 2–139/article |
 
 Each focused skill includes the same setup flow and works standalone. Install the full suite above for all capabilities.
@@ -204,6 +206,7 @@ The skill operates on Citedy's credit system. New accounts receive **100 free cr
 | Content gap analysis                         | 40 credits          |
 | Content ingestion (YouTube, PDF, audio, web) | 1-55 credits        |
 | Lead magnet                                  | 30-100 credits      |
+| Warm lead report                             | 40 credits          |
 
 ## Ready to Automate Your Content?
 

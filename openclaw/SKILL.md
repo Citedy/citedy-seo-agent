@@ -8,10 +8,10 @@ description: >
   languages, create social media adaptations for X, LinkedIn, Facebook, Reddit,
   Threads, Instagram, Instagram Reels, YouTube Shorts, and Shopify, generate lead magnets (checklists, swipe files,
   frameworks), ingest any URL (YouTube videos, web articles, PDFs, audio files) into structured
-  content, ultra-cheap turbo articles from 2 credits, generate short-form
-  AI UGC viral videos with subtitles and direct publishing to Instagram Reels, YouTube Shorts, and TikTok, Google Search Console performance reports,
+  content, warm lead account reports from one company domain, ultra-cheap turbo
+  articles from 2 credits, generate short-form AI UGC viral videos with subtitles and direct publishing to Instagram Reels, YouTube Shorts, and TikTok, Google Search Console performance reports,
   and run fully automated content autopilot. Powered by Citedy.
-version: "3.6.2"
+version: "3.7.0"
 author: Citedy
 tags:
   - seo
@@ -26,6 +26,8 @@ tags:
   - automation
   - lead-magnets
   - content-ingestion
+  - warm-leads
+  - sales-intelligence
 metadata:
   openclaw:
     requires:
@@ -49,7 +51,7 @@ Base URL: `https://www.citedy.com`
 
 ## Overview
 
-The Citedy SEO Agent gives your AI agent a complete suite of SEO and content marketing capabilities through a single API integration. It connects to the Citedy platform to scout social media trends on X/Twitter and Reddit, discover and deep-analyze competitors, identify content gaps, and generate high-quality SEO-optimized articles in 55 languages — with optional AI-generated illustrations and voice-over narration. Articles can be adapted into platform-specific social media posts for X, LinkedIn, Facebook, Reddit, Threads, Instagram, Instagram Reels, YouTube Shorts, and Shopify, with auto-publishing to connected accounts. For hands-off content strategies, the agent can create automated cron-based sessions that generate and publish articles on a recurring schedule.
+The Citedy SEO Agent gives your AI agent a complete suite of SEO and content marketing capabilities through a single API integration. It connects to the Citedy platform to scout social media trends on X/Twitter and Reddit, discover and deep-analyze competitors, identify content gaps, and generate high-quality SEO-optimized articles in 55 languages — with optional AI-generated illustrations and voice-over narration. Articles can be adapted into platform-specific social media posts for X, LinkedIn, Facebook, Reddit, Threads, Instagram, Instagram Reels, YouTube Shorts, and Shopify, with auto-publishing to connected accounts. The agent can also turn one company domain into a warm lead report with recent account signals, buyer-role candidates, scoring, evidence-grounded outreach drafts, and JSON/CSV/XLSX export. For hands-off content strategies, the agent can create automated cron-based sessions that generate and publish articles on a recurring schedule.
 
 ---
 
@@ -66,6 +68,7 @@ Use this skill when the user asks to:
 - Set up automated content sessions (cron-based article generation)
 - Generate lead magnets (checklists, swipe files, frameworks) for lead capture
 - Ingest any URL (YouTube video, web article) into structured content with summary and metadata
+- Create warm lead reports from one company domain before outreach: who to contact, why now, and what to say first
 - Generate short-form AI UGC viral videos with subtitles (script, avatar, video, merge) and publish directly to Instagram Reels, YouTube Shorts, and TikTok
 - Register webhook endpoints to receive real-time event notifications (article published, ingestion complete, etc.)
 - List or delete webhook endpoints, view webhook delivery history
@@ -186,17 +189,29 @@ Check search performance, find content opportunities, write and publish:
 
 If GSC is not connected, the report returns `connected: false` with a URL to connect it.
 
+### Warm Lead Account Brief
+
+Turn one company domain into a warm account report before outreach:
+
+1. `POST /api/agent/citedy-warm-lead` with `{ "domain": "acme-saas.example.com" }` → get `run.id`
+2. Poll `GET /api/agent/citedy-warm-lead/{runId}` until `status` is `"completed"`, `"blocked"`, or `"failed"`
+3. Use the result to review recent signals, buyer candidates, confidence scoring, policy output, and evidence-grounded drafts
+4. Export with `GET /api/agent/citedy-warm-lead/{runId}/export?format=xlsx` for an SDR, founder, or agency client pack
+
+Use this when the user asks who to contact at a target account, why now, or what a grounded first message should say. V1 does not send email automatically.
+
 ### Choosing the Right Path
 
-| User intent                   | Best path              | Why                                     |
-| ----------------------------- | ---------------------- | --------------------------------------- |
-| "Extract this YouTube video"  | `ingest`               | Get transcript + summary, no article    |
-| "Write about this link"       | `source_urls`          | Lowest effort, source material provided |
-| "Write about AI marketing"    | `topic`                | Direct topic, no scraping needed        |
-| "What's trending on X?"       | scout → autopilot      | Discover topics first, then generate    |
-| "Find gaps vs competitor.com" | gaps → autopilot       | Data-driven content strategy            |
-| "Show my GSC report"          | gsc.report → autopilot | Data from Google Search Console         |
-| "Post 2 articles daily"       | session                | Set-and-forget automation               |
+| User intent                         | Best path              | Why                                     |
+| ----------------------------------- | ---------------------- | --------------------------------------- |
+| "Extract this YouTube video"        | `ingest`               | Get transcript + summary, no article    |
+| "Write about this link"             | `source_urls`          | Lowest effort, source material provided |
+| "Write about AI marketing"          | `topic`                | Direct topic, no scraping needed        |
+| "What's trending on X?"             | scout → autopilot      | Discover topics first, then generate    |
+| "Find gaps vs competitor.com"       | gaps → autopilot       | Data-driven content strategy            |
+| "Who should I contact at acme.com?" | warm lead              | Account signals + buyers + drafts       |
+| "Show my GSC report"                | gsc.report → autopilot | Data from Google Search Console         |
+| "Post 2 articles daily"             | session                | Set-and-forget automation               |
 
 ---
 
@@ -261,6 +276,24 @@ Reply to user:
 > Rate limits: 58/60 general, 9/10 scout, 10/10 gaps
 > Connected platforms: LinkedIn (John Doe), X (not connected)
 
+### User asks for a warm lead report
+
+> User: "We want to reach Acme SaaS. Who should we contact and why now?"
+
+1. `POST /api/agent/citedy-warm-lead` with `{ "domain": "acme-saas.example.com" }` → 40 credits on accepted new runs
+2. Poll `GET /api/agent/citedy-warm-lead/{runId}` until completed
+3. Show the account score, recent evidence-backed signals, up to 3 buyer-role candidates, and up to 3 outreach drafts
+4. Offer export: JSON for agents, CSV for spreadsheets, or Excel `.xlsx` for a client-ready report
+
+Reply to user:
+
+> Warm lead report complete for Acme SaaS.
+>
+> - Why now: recent launch, hiring signal, and AI search visibility content
+> - Best first contact: Growth leader (82 confidence), Founder (78), Content lead (74)
+> - Drafts: 3 evidence-grounded options, review required
+> - Export: JSON, CSV, or Excel
+
 ---
 
 ## Limitations
@@ -269,6 +302,7 @@ Reply to user:
 - Article generation is synchronous — the API waits and returns the full article (may take 30-120 seconds depending on size and extensions).
 - Only one active autopilot session is allowed per tenant at a time.
 - Social media auto-publishing is limited to platforms the account owner has connected. Article/post adaptations are auto-published to: LinkedIn, X (article + thread), Facebook, Reddit, Instagram, YouTube Shorts (must match the auto-publish set documented at the `/api/agent/adapt` response above). Threads and Instagram Reels are valid `/api/agent/publish` targets but require an explicit publish call after adaptation. Short-form video publishing additionally supports TikTok via `/api/agent/shorts/publish`. Platforms without a connected account return adaptation text only.
+- Warm lead reports are not email finders and do not send email automatically. Treat drafts as review-required, evidence-grounded suggestions before outreach.
 - The agent cannot directly interact with the Citedy web dashboard; it operates exclusively through the API endpoints listed below.
 - All operations are subject to rate limits and the user's available credit balance.
 
@@ -278,6 +312,45 @@ Reply to user:
 
 All requests require `Authorization: Bearer <api_key>`.
 Base URL: `https://www.citedy.com`
+
+### Warm Lead Report
+
+```http
+POST /api/agent/citedy-warm-lead
+{
+  "domain": "acme-saas.example.com",
+  "icp": "content-led-saas",
+  "maxContacts": 3,
+  "drafts": 3,
+  "freshnessDays": 90
+}
+```
+
+- 40 credits for each accepted new run. Existing idempotent retries return the run with `credits_charged: 0`.
+- **Async** — returns `202 Accepted` with `{ run: { id, status }, credits_charged }`.
+- Required: `domain` — one company domain. Bare domains and `http(s)` URLs are accepted; paths/social profile URLs are rejected.
+- Optional: `icp` (`seo-geo-agency` | `content-led-saas` | `vertical-saas`, default `content-led-saas`), `buyerRoles` (up to 6), `maxContacts` (1-3, default 3), `drafts` (1-3, default 3), `freshnessDays` (7-365, default 90), `idempotencyKey` (8-128 chars).
+- Output includes normalized company identity, bounded evidence URLs/snippets, recent account signals, up to 3 buyer candidates, scoring, policy output, up to 3 evidence-grounded drafts, safe cost/debug counters, and export-ready rows.
+- V1 does not send email automatically.
+
+**Check Status:**
+
+```http
+GET /api/agent/citedy-warm-lead/{runId}
+```
+
+- 0 credits. Poll until `status` is `completed`, `blocked`, or `failed`.
+- Completed runs include the canonical JSON warm lead result.
+- Failed runs are persisted with error details; billing refunds are handled by the backend when eligible.
+
+**Export Report:**
+
+```http
+GET /api/agent/citedy-warm-lead/{runId}/export?format=xlsx
+```
+
+- 0 credits. `format` is `json` (canonical object), `csv`, or `xlsx`.
+- Use JSON for agent handoff, CSV for spreadsheet pipelines, and XLSX for client/SDR reports.
 
 ### Scout X/Twitter
 
@@ -851,19 +924,19 @@ POST /api/agent/shorts/publish
 
 **Pricing:**
 
-| Step                        | Credits |
-| --------------------------- | ------- |
-| Script                      | 1       |
-| Avatar                      | 3       |
-| Video (5s)                  | 60      |
-| Video (10s)                 | 130     |
-| Video (15s)                 | 185     |
-| Merge + subtitles           | 5       |
-| Publish (IG Reels)          | 0       |
-| Publish (YT Shorts)         | 0       |
-| Publish (TikTok)            | 0       |
-| **Full 10s video**          | **139** |
-| **Full 10s + publish all**  | **139** |
+| Step                       | Credits |
+| -------------------------- | ------- |
+| Script                     | 1       |
+| Avatar                     | 3       |
+| Video (5s)                 | 60      |
+| Video (10s)                | 130     |
+| Video (15s)                | 185     |
+| Merge + subtitles          | 5       |
+| Publish (IG Reels)         | 0       |
+| Publish (YT Shorts)        | 0       |
+| Publish (TikTok)           | 0       |
+| **Full 10s video**         | **139** |
+| **Full 10s + publish all** | **139** |
 
 ### Trend Scan
 
@@ -1142,60 +1215,63 @@ Use `connected_platforms` to decide which platforms to pass to `/api/agent/adapt
 
 ## API Quick Reference
 
-| Endpoint                           | Method | Cost                                 |
-| ---------------------------------- | ------ | ------------------------------------ |
-| `/api/agent/register`              | POST   | free (public)                        |
-| `/api/agent/health`                | GET    | free (public)                        |
-| `/api/agent/status`                | GET    | free                                 |
-| `/api/agent/me`                    | GET    | free                                 |
-| `/api/agent/rotate-key`            | POST   | free (1/hour)                        |
-| `/api/agent/settings`              | GET    | free                                 |
-| `/api/agent/settings`              | PUT    | free                                 |
-| `/api/agent/image-style`           | PUT    | free                                 |
-| `/api/agent/personas`              | GET    | free                                 |
-| `/api/agent/articles`              | GET    | free                                 |
-| `/api/agent/articles/{id}/publish` | POST   | free                                 |
-| `/api/agent/articles/{id}`         | PATCH  | free (unpublish)                     |
-| `/api/agent/articles/{id}`         | DELETE | free                                 |
-| `/api/agent/scan`                  | POST   | 2-8 credits (by mode)                |
-| `/api/agent/post`                  | POST   | 2 credits                            |
-| `/api/agent/autopilot`             | POST   | 2-139 credits                        |
-| `/api/agent/adapt`                 | POST   | ~5 credits/platform                  |
-| `/api/agent/publish`               | POST   | 0 credits (publishing is free)       |
-| `/api/agent/session`               | POST   | free (articles billed on generation) |
-| `/api/agent/schedule`              | GET    | free                                 |
-| `/api/agent/schedule/gaps`         | GET    | free                                 |
-| `/api/agent/schedule/suggest`      | GET    | free (REST only, not MCP tool)       |
-| `/api/agent/scout/x`               | POST   | 35-70 credits                        |
-| `/api/agent/scout/x/{runId}`       | GET    | free (poll)                          |
-| `/api/agent/scout/reddit`          | POST   | 30 credits                           |
-| `/api/agent/scout/reddit/{runId}`  | GET    | free (poll)                          |
-| `/api/agent/gaps`                  | GET    | free                                 |
-| `/api/agent/gaps/generate`         | POST   | 40 credits                           |
-| `/api/agent/competitors/discover`  | POST   | 20 credits                           |
-| `/api/agent/competitors/scout`     | POST   | 25-50 credits                        |
-| `/api/agent/products`              | POST   | 1 credit                             |
-| `/api/agent/products`              | GET    | free                                 |
-| `/api/agent/products/{id}`         | DELETE | free                                 |
-| `/api/agent/products/search`       | POST   | free                                 |
-| `/api/agent/ingest`                | POST   | 1-55 credits                         |
-| `/api/agent/ingest`                | GET    | free                                 |
-| `/api/agent/ingest/{id}`           | GET    | free (poll)                          |
-| `/api/agent/ingest/{id}/content`   | GET    | free                                 |
-| `/api/agent/ingest/batch`          | POST   | 1-55 credits per URL                 |
-| `/api/agent/lead-magnets`          | POST   | 30-100 credits                       |
-| `/api/agent/lead-magnets/{id}`     | GET    | free (poll)                          |
-| `/api/agent/lead-magnets/{id}`     | PATCH  | free                                 |
-| `/api/agent/shorts/script`         | POST   | 1 credit                             |
-| `/api/agent/shorts/avatar`         | POST   | 3 credits                            |
-| `/api/agent/shorts`                | POST   | 60-185 credits (by duration)         |
-| `/api/agent/shorts/{id}`           | GET    | free (poll)                          |
-| `/api/agent/shorts/merge`          | POST   | 5 credits                            |
-| `/api/agent/shorts/publish`        | POST   | 0 credits (publishing is free)       |
-| `/api/agent/webhooks`              | POST   | free                                 |
-| `/api/agent/webhooks`              | GET    | free                                 |
-| `/api/agent/webhooks/{id}`         | DELETE | free                                 |
-| `/api/agent/webhooks/deliveries`   | GET    | free                                 |
+| Endpoint                                     | Method | Cost                                 |
+| -------------------------------------------- | ------ | ------------------------------------ |
+| `/api/agent/register`                        | POST   | free (public)                        |
+| `/api/agent/health`                          | GET    | free (public)                        |
+| `/api/agent/status`                          | GET    | free                                 |
+| `/api/agent/me`                              | GET    | free                                 |
+| `/api/agent/rotate-key`                      | POST   | free (1/hour)                        |
+| `/api/agent/settings`                        | GET    | free                                 |
+| `/api/agent/settings`                        | PUT    | free                                 |
+| `/api/agent/image-style`                     | PUT    | free                                 |
+| `/api/agent/personas`                        | GET    | free                                 |
+| `/api/agent/articles`                        | GET    | free                                 |
+| `/api/agent/articles/{id}/publish`           | POST   | free                                 |
+| `/api/agent/articles/{id}`                   | PATCH  | free (unpublish)                     |
+| `/api/agent/articles/{id}`                   | DELETE | free                                 |
+| `/api/agent/scan`                            | POST   | 2-8 credits (by mode)                |
+| `/api/agent/post`                            | POST   | 2 credits                            |
+| `/api/agent/autopilot`                       | POST   | 2-139 credits                        |
+| `/api/agent/adapt`                           | POST   | ~5 credits/platform                  |
+| `/api/agent/publish`                         | POST   | 0 credits (publishing is free)       |
+| `/api/agent/session`                         | POST   | free (articles billed on generation) |
+| `/api/agent/schedule`                        | GET    | free                                 |
+| `/api/agent/schedule/gaps`                   | GET    | free                                 |
+| `/api/agent/schedule/suggest`                | GET    | free (REST only, not MCP tool)       |
+| `/api/agent/scout/x`                         | POST   | 35-70 credits                        |
+| `/api/agent/scout/x/{runId}`                 | GET    | free (poll)                          |
+| `/api/agent/scout/reddit`                    | POST   | 30 credits                           |
+| `/api/agent/scout/reddit/{runId}`            | GET    | free (poll)                          |
+| `/api/agent/gaps`                            | GET    | free                                 |
+| `/api/agent/gaps/generate`                   | POST   | 40 credits                           |
+| `/api/agent/competitors/discover`            | POST   | 20 credits                           |
+| `/api/agent/competitors/scout`               | POST   | 25-50 credits                        |
+| `/api/agent/products`                        | POST   | 1 credit                             |
+| `/api/agent/products`                        | GET    | free                                 |
+| `/api/agent/products/{id}`                   | DELETE | free                                 |
+| `/api/agent/products/search`                 | POST   | free                                 |
+| `/api/agent/ingest`                          | POST   | 1-55 credits                         |
+| `/api/agent/ingest`                          | GET    | free                                 |
+| `/api/agent/ingest/{id}`                     | GET    | free (poll)                          |
+| `/api/agent/ingest/{id}/content`             | GET    | free                                 |
+| `/api/agent/ingest/batch`                    | POST   | 1-55 credits per URL                 |
+| `/api/agent/lead-magnets`                    | POST   | 30-100 credits                       |
+| `/api/agent/lead-magnets/{id}`               | GET    | free (poll)                          |
+| `/api/agent/lead-magnets/{id}`               | PATCH  | free                                 |
+| `/api/agent/citedy-warm-lead`                | POST   | 40 credits                           |
+| `/api/agent/citedy-warm-lead/{runId}`        | GET    | free (poll)                          |
+| `/api/agent/citedy-warm-lead/{runId}/export` | GET    | free                                 |
+| `/api/agent/shorts/script`                   | POST   | 1 credit                             |
+| `/api/agent/shorts/avatar`                   | POST   | 3 credits                            |
+| `/api/agent/shorts`                          | POST   | 60-185 credits (by duration)         |
+| `/api/agent/shorts/{id}`                     | GET    | free (poll)                          |
+| `/api/agent/shorts/merge`                    | POST   | 5 credits                            |
+| `/api/agent/shorts/publish`                  | POST   | 0 credits (publishing is free)       |
+| `/api/agent/webhooks`                        | POST   | free                                 |
+| `/api/agent/webhooks`                        | GET    | free                                 |
+| `/api/agent/webhooks/{id}`                   | DELETE | free                                 |
+| `/api/agent/webhooks/deliveries`             | GET    | free                                 |
 
 **1 credit = $0.01 USD**
 

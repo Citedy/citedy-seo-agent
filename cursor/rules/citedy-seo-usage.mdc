@@ -1,5 +1,5 @@
 ---
-description: "Use Citedy MCP tools for SEO content creation, trend scouting, competitor analysis, article generation, social media publishing, video shorts, content ingestion, and lead magnets"
+description: "Use Citedy MCP tools for SEO content creation, trend scouting, competitor analysis, article generation, social media publishing, video shorts, content ingestion, lead magnets, and warm lead reports"
 alwaysApply: false
 ---
 
@@ -11,15 +11,11 @@ alwaysApply: false
 https://mcp.citedy.com/mcp
 ```
 
-**Auth**: Bearer token via `CITEDY_AGENT_API_KEY` environment variable.
+**Auth**: Bearer token via `CITEDY_API_KEY` environment variable.
 
 **Registration**: If the user does not have an API key, register via:
 ```
 POST https://www.citedy.com/api/agent/register
-```
-with payload:
-```json
-{ "agent_name": "my_agent" }
 ```
 
 ---
@@ -34,6 +30,7 @@ Use Citedy MCP tools whenever the user wants to:
 - Produce AI avatar video shorts
 - Ingest URLs or documents into structured content
 - Create lead magnets (checklists, swipe files, frameworks)
+- Create warm lead account reports from company domains
 - Manage a content calendar or automate publishing
 
 ---
@@ -46,6 +43,7 @@ Use Citedy MCP tools whenever the user wants to:
 |------|-------------|
 | `agent.me` | Check authenticated user info, credits balance, connected accounts |
 | `agent.status` | Get platform health, quota usage, active sessions |
+| `agent.health` | Check the agent service health and connectivity |
 
 Always call `agent.me` first if the user asks about their account or available credits.
 
@@ -78,26 +76,49 @@ Use before generating articles when the user wants to outrank specific domains o
 | Tool | When to use |
 |------|-------------|
 | `gaps.generate` | Identify content topics that competitors rank for but the user's site does not |
+| `gaps.list` | List previously generated content gaps |
 
 Run after `competitors.scout` to get a prioritized list of high-opportunity topics.
 
 ---
 
-### Article Generation
+### Warm Lead Reports
+
+| Tool | When to use |
+|------|-------------|
+| `citedy_warm_lead.start` | Start a warm lead report for one company domain |
+| `citedy_warm_lead.get` | Poll status and read the canonical JSON result |
+| `citedy_warm_lead.export` | Export a completed report as JSON, CSV, or Excel |
+
+Use this when the user asks who to contact at a target account, why now, or what a grounded first message should say.
+
+V1 does not send email automatically. Treat drafts as review-required and tied to evidence.
+
+---
+
+### Article Generation & Management
 
 | Tool | When to use |
 |------|-------------|
 | `article.generate` | Generate a full SEO article from a keyword, topic, or brief |
+| `article.get` | Get a single article by id (poll draft status, check result) |
+| `article.list` | List existing articles for the tenant |
+| `article.publish` | Publish a draft article (status: generated → published) |
+| `article.unpublish` | Unpublish a published article (→ draft) |
+| `article.delete` | Permanently delete an article |
 
-Key options:
+Key options for `article.generate`:
 - `keyword` — target search term
 - `language` — one of 55 supported languages
 - `persona` — writing voice/style
 - `illustrations` — include AI-generated images
 - `voiceover` — include TTS audio
 - `internalLinks` — auto-link to existing content
+- `auto_publish` — when `false`, article stays as draft for review before publishing
 
-`article.generate` returns generated content in one call. Use `article.list` to fetch recent generations.
+**Important**: `article.generate` is synchronous — it returns the full article directly (timeout up to 5 minutes). No polling needed.
+
+**Draft mode**: Set `auto_publish: false` to generate articles as drafts. Review them, then use `article.publish` to publish. Useful for regulated industries (healthcare, finance) requiring content review before publishing.
 
 ---
 
@@ -107,7 +128,7 @@ Key options:
 |------|-------------|
 | `adapt.generate` | Convert a blog article into platform-optimized social posts |
 
-Supported platforms: X, LinkedIn, Facebook, Reddit, Threads, Instagram, Instagram Reels, YouTube Shorts.
+Supported platforms: X, LinkedIn, Facebook, Reddit, Instagram, TikTok, YouTube, Shopify, Telegram.
 
 Pass the article ID or raw text plus a list of target platforms.
 
@@ -129,12 +150,13 @@ Requires a connected account (user must authorize via Citedy dashboard). Check c
 |------|-------------|
 | `shorts.script` | Generate a video script from an article or topic |
 | `shorts.generate` | Produce an AI avatar video from a script |
+| `shorts.get` | Poll async video generation status |
 | `shorts.avatar` | Select or customize the AI avatar |
 | `shorts.merge` | Merge video segments and add subtitles |
 
 Typical flow: `shorts.script` → `shorts.generate` → `shorts.merge`.
 
-`shorts.generate` is async — poll with `shorts.get` until the video URL is returned.
+`shorts.generate` is async — poll `shorts.get(id)` until `status === "completed"`.
 
 ---
 
@@ -144,10 +166,21 @@ Typical flow: `shorts.script` → `shorts.generate` → `shorts.merge`.
 |------|-------------|
 | `ingest.create` | Ingest a single URL (web page, YouTube video, PDF) into structured content |
 | `ingest.batch` | Ingest multiple URLs in one request |
-| `ingest.get` | Poll ingestion status for async jobs |
-| `ingest.content.get` | Retrieve extracted content payload by ingestion ID |
+| `ingest.get` | Poll ingestion job status |
+| `ingest.content.get` | Retrieve structured content after ingestion |
 
 After ingestion, the content can be passed directly to `article.generate` as source material.
+
+---
+
+### Brand Scanning
+
+| Tool | When to use |
+|------|-------------|
+| `brand.scan` | Scan LLM responses for brand mentions and visibility |
+| `brand.scan.get` | Poll brand scan results (async companion) |
+
+`brand.scan` is async — poll `brand.scan.get(id)` until complete.
 
 ---
 
@@ -156,6 +189,9 @@ After ingestion, the content can be passed directly to `article.generate` as sou
 | Tool | When to use |
 |------|-------------|
 | `leadmagnet.generate` | Create a downloadable lead magnet (checklist, swipe file, or framework) from a topic or article |
+| `leadmagnet.get` | Poll lead magnet generation status |
+| `leadmagnet.publish` | Publish a generated lead magnet |
+| `leadmagnet.archive` | Archive a lead magnet |
 
 Returns a structured document ready for publishing or gating behind an email opt-in form.
 
@@ -165,12 +201,39 @@ Returns a structured document ready for publishing or gating behind an email opt
 
 | Tool | When to use |
 |------|-------------|
-| `products.create` | Add a new product to the knowledge base |
 | `products.list` | List products in the user's knowledge base |
-| `products.search` | Semantic search in product knowledge |
-| `products.delete` | Remove a product document by ID |
+| `products.create` | Add a new product to the knowledge base |
+| `products.delete` | Remove a product from the knowledge base |
+| `products.search` | Search products by query |
 
 The knowledge base is used to ground article generation in accurate product descriptions and brand voice.
+
+---
+
+### SEO Analysis
+
+| Tool | When to use |
+|------|-------------|
+| `seo.meta_tags.check` | Analyze meta tags for SEO best practices |
+| `seo.headings.check` | Check heading structure (H1-H6) |
+| `seo.links.analyze` | Analyze external and internal links |
+| `seo.internal_links.plan` | Plan internal linking strategy |
+| `seo.og.preview` | Preview Open Graph social cards |
+| `seo.schema.validate` | Validate Schema.org structured data |
+| `seo.robots.check` | Check robots.txt rules |
+| `seo.sitemap.check` | Validate sitemap structure |
+| `seo.og_image.generate` | Generate Open Graph images |
+
+---
+
+### Settings & Personas
+
+| Tool | When to use |
+|------|-------------|
+| `settings.get` | Get current agent configuration and preferences |
+| `personas.list` | List available writing personas/voices for article generation |
+
+Use `personas.list` to discover available writing styles before calling `article.generate` with a `persona` parameter.
 
 ---
 
@@ -180,7 +243,7 @@ The knowledge base is used to ground article generation in accurate product desc
 |------|-------------|
 | `schedule.gaps` | View content gaps mapped to the publishing calendar |
 | `schedule.list` | List scheduled content items |
-| `session.create` | Create recurring content automation cadence |
+| `schedule.suggest` | Get optimal time slot recommendations for publishing |
 
 ---
 
@@ -198,12 +261,12 @@ A session runs the full pipeline: scout → gaps → generate → adapt → publ
 
 | Tool | When to use |
 |------|-------------|
-| `webhooks.register` | Register a URL to receive event notifications |
 | `webhooks.list` | List registered webhook endpoints |
-| `webhooks.deliveries` | Inspect webhook delivery history |
+| `webhooks.register` | Register a URL to receive event notifications |
+| `webhooks.deliveries` | View webhook delivery history |
 | `webhooks.delete` | Remove a webhook |
 
-Events include: `article.ready`, `short.ready`, `publish.success`, `session.complete`.
+Events include: `article.generated`, `article.published`, `article.unpublished`, `article.deleted`, `article.failed`, `ingestion.completed`, `social_adaptation.generated`, `lead_magnet.ready`, `scout.results_ready`, `session.articles_generated`, `billing.credits_low`, `billing.credits_empty`.
 
 ---
 
@@ -212,9 +275,11 @@ Events include: `article.ready`, `short.ready`, `publish.success`, `session.comp
 Many Citedy tools are async. The standard pattern is:
 
 ```
-1. Call async tool (e.g. `scout.x`, `ingest.create`, `shorts.generate`)
-2. Poll companion tool (`scout.x.result`, `ingest.get`, `shorts.get`) every few seconds
-3. Stop polling when response status is terminal and return result/errors to user
+1. Call async tool (e.g. scout.x, shorts.generate, ingest.create, ingest.batch, leadmagnet.generate, brand.scan)
+2. Poll companion tool (scout.x.result, shorts.get, ingest.get, ingest.get, leadmagnet.get, brand.scan.get) every few seconds
+3. When status === "completed", retrieve the result
 ```
+
+Note: `article.generate` is synchronous — no polling needed.
 
 Let the user know the job has started and provide updates as they arrive.

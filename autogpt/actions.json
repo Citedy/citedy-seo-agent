@@ -1,5 +1,5 @@
 {
-  "version": "3.6.2",
+  "version": "3.7.0",
   "base_url": "https://www.citedy.com",
   "auth": {
     "type": "bearer",
@@ -65,7 +65,10 @@
         "trustLevel": "show_preview",
         "scanSources": ["x", "google"],
         "targetTimezone": "America/New_York",
-        "publishSchedule": { "postsPerDay": 2, "slots": ["09:00", "17:00"] }
+        "publishSchedule": {
+          "postsPerDay": 2,
+          "slots": ["09:00", "17:00"]
+        }
       }
     },
     {
@@ -520,7 +523,14 @@
           "https://download.citedy.com/...1.mp4",
           "https://download.citedy.com/...2.mp4"
         ],
-        "phrases": [{ "text": "First part" }, { "text": "Second part" }]
+        "phrases": [
+          {
+            "text": "First part"
+          },
+          {
+            "text": "Second part"
+          }
+        ]
       }
     },
     {
@@ -533,9 +543,18 @@
         "video_url": "https://download.citedy.com/agent/shorts/.../video-sub.mp4",
         "speech_text": "I just found 8 hidden competitors in 3 minutes...",
         "targets": [
-          { "platform": "instagram_reels", "account_id": "uuid-of-ig" },
-          { "platform": "youtube_shorts", "account_id": "uuid-of-yt" },
-          { "platform": "tiktok", "account_id": "uuid-of-tt" }
+          {
+            "platform": "instagram_reels",
+            "account_id": "uuid-of-ig"
+          },
+          {
+            "platform": "youtube_shorts",
+            "account_id": "uuid-of-yt"
+          },
+          {
+            "platform": "tiktok",
+            "account_id": "uuid-of-tt"
+          }
         ],
         "privacy_status": "public",
         "tiktok_privacy_level": "PUBLIC_TO_EVERYONE"
@@ -694,6 +713,31 @@
       "description": "View webhook delivery history",
       "cost": "free",
       "query_params": ["status", "limit", "offset"]
+    },
+    {
+      "id": "warm_lead_start",
+      "method": "POST",
+      "path": "/api/agent/citedy-warm-lead",
+      "description": "Start a warm lead account report for one company domain",
+      "cost": "40 credits",
+      "payload_example": {
+        "domain": "acme-saas.example.com"
+      }
+    },
+    {
+      "id": "warm_lead_get",
+      "method": "GET",
+      "path": "/api/agent/citedy-warm-lead/{runId}",
+      "description": "Poll a warm lead run and return the canonical JSON result when completed",
+      "cost": "free"
+    },
+    {
+      "id": "warm_lead_export",
+      "method": "GET",
+      "path": "/api/agent/citedy-warm-lead/{runId}/export",
+      "description": "Export a completed warm lead report as JSON, CSV, or Excel .xlsx",
+      "cost": "free",
+      "query_params": ["format"]
     }
   ],
   "agent_templates": [

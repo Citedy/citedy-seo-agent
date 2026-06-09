@@ -7,6 +7,14 @@ const root = path.dirname(fileURLToPath(import.meta.url));
 const agentsDir = path.join(root, "agents");
 const manifestPath = path.join(agentsDir, "manifest.json");
 const actionsPath = path.join(root, "actions.json");
+const ALLOWED_DUPLICATE_ACTION_ENDPOINTS = new Map([
+  ["POST /api/agent/publish", new Set(["publish", "publish_raw"])],
+  [
+    "PATCH /api/agent/lead-magnets/{id}",
+    new Set(["lead_magnets_publish", "lead_magnets_archive"]),
+  ],
+]);
+
 const REQUIRED_ACTION_ENDPOINTS = [
   { method: "GET", path: "/api/agent/health" },
   { method: "GET", path: "/api/agent/status" },
@@ -17,6 +25,9 @@ const REQUIRED_ACTION_ENDPOINTS = [
   { method: "POST", path: "/api/agent/publish" },
   { method: "GET", path: "/api/agent/schedule/gaps" },
   { method: "POST", path: "/api/agent/products" },
+  { method: "POST", path: "/api/agent/citedy-warm-lead" },
+  { method: "GET", path: "/api/agent/citedy-warm-lead/{runId}" },
+  { method: "GET", path: "/api/agent/citedy-warm-lead/{runId}/export" },
   { method: "POST", path: "/api/agent/shorts" },
   { method: "GET", path: "/api/agent/shorts/{id}" },
   { method: "GET", path: "/api/agent/webhooks/deliveries" },
@@ -177,9 +188,16 @@ if (actions && Array.isArray(actions.actions)) {
 
   for (const [key, ids] of seenActionKeys.entries()) {
     if (ids.length > 1) {
-      fail(
-        `actions.json has duplicate action endpoint '${key}' for ids: ${ids.join(", ")}`,
-      );
+      const allowed = ALLOWED_DUPLICATE_ACTION_ENDPOINTS.get(key);
+      const isAllowed =
+        allowed &&
+        ids.length === allowed.size &&
+        ids.every((id) => allowed.has(id));
+      if (!isAllowed) {
+        fail(
+          `actions.json has duplicate action endpoint '${key}' for ids: ${ids.join(", ")}`,
+        );
+      }
     }
   }
 

@@ -1,6 +1,6 @@
 # Citedy — AI SEO Content Autopilot for Cursor
 
-Citedy connects Cursor to a full AI SEO platform via MCP, giving your AI assistant the ability to scout trending topics on X and Reddit, analyze competitors, generate SEO-optimized articles in 55 languages (with AI illustrations and voice-over), create social media adaptations for 9 platforms, publish to connected accounts, produce AI UGC viral video shorts with subtitles, ingest any URL or YouTube video into structured content, generate lead magnets, and run a fully automated content autopilot on a recurring schedule — all from inside your editor.
+Citedy connects Cursor to a full AI SEO platform via MCP, giving your AI assistant the ability to scout trending topics on X and Reddit, analyze competitors, generate SEO-optimized articles in 55 languages (with AI illustrations and voice-over), create social media adaptations for 9 platforms, publish to connected accounts, produce AI UGC viral video shorts with subtitles, ingest any URL or YouTube video into structured content, generate lead magnets, create warm lead account reports from company domains, and run a fully automated content autopilot on a recurring schedule — all from inside your editor.
 
 ---
 
@@ -23,7 +23,7 @@ Search for **Citedy** in the Cursor Extensions marketplace and install directly.
 Set your Citedy API key as an environment variable before starting Cursor:
 
 ```bash
-export CITEDY_AGENT_API_KEY=your_api_key_here
+export CITEDY_API_KEY=your_api_key_here
 ```
 
 Or add it to your shell profile (`~/.zshrc`, `~/.bashrc`) for persistence.
@@ -49,17 +49,17 @@ https://mcp.citedy.com/mcp
 ```bash
 curl -X POST https://www.citedy.com/api/agent/register \
   -H "Content-Type: application/json" \
-  -d '{ "agent_name": "my_cursor_agent" }'
+  -d '{ "email": "you@example.com", "name": "My Cursor Agent" }'
 ```
 
-The response includes `approval_url`. Open it in browser to approve and get your API key.
+The response includes your API key and initial credit balance.
 
 ---
 
 ## Documentation
 
-- Full platform docs: [citedy.com](https://www.citedy.com)
-- MCP tool reference: [citedy.com/tools/mcp](https://www.citedy.com/tools/mcp)
+- Full platform docs: [citedy.com/docs](https://www.citedy.com/docs)
+- MCP tool reference: [citedy.com/docs/mcp/tools](https://www.citedy.com/docs/mcp/tools)
 
 ## Repository
 
