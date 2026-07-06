@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/citedy-citedy-seo-agent-badge.png)](https://mseep.ai/app/citedy-citedy-seo-agent)
+
 # Citedy SEO Agent: Your AI-Powered Content Marketing Team
 
 <a href="https://glama.ai/mcp/servers/@Citedy/citedy-seo-agent">
