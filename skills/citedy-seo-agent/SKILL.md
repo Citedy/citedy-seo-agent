@@ -186,6 +186,31 @@ Check search performance, find content opportunities, write and publish:
 
 If GSC is not connected, the report returns `connected: false` with a URL to connect it.
 
+### Optional: TweetClaw X/Twitter Source Context
+
+When an OpenClaw user already has TweetClaw installed, you may use its reviewed
+read results as source material before calling Citedy workflows:
+
+```bash
+openclaw plugins install npm:@xquik/tweetclaw
+```
+
+Good source packets include tweet URLs, reply excerpts, public metrics, user
+lookup notes, follower-export summaries, media references, monitor snapshots,
+or webhook event summaries. Use those packets to choose a Citedy scout query,
+`topic`, `source_urls`, or adaptation brief.
+
+Keep boundaries clear:
+
+- Citedy remains responsible for trend scouting, article generation, social
+  adaptations, publishing, scheduling, webhooks, and analytics.
+- TweetClaw remains the source of reviewed X/Twitter account evidence and any
+  TweetClaw write-like action.
+- Posts, replies, DMs, follows, media uploads, monitor creation, and giveaway
+  draws must stay inside the TweetClaw/OpenClaw approval flow.
+- Never paste API keys, cookies, browser profiles, or raw session material into
+  prompts, logs, issues, or commits.
+
 ### Choosing the Right Path
 
 | User intent                   | Best path              | Why                                     |

@@ -61,6 +61,26 @@ npx openskills install Citedy/citedy-seo-agent
    { "topic": "...", "size": "standard", "language": "en" }
    ```
 
+## Optional X/Twitter Source Context
+
+OpenClaw users who already use
+[TweetClaw](https://github.com/Xquik-dev/tweetclaw) can pass a reviewed
+X/Twitter source pack into Citedy before trend scouting, article generation, or
+social adaptation. Use this only as source material: tweet URLs, reply
+excerpts, public metrics, user lookup notes, follower-export summaries, media
+references, monitor snapshots, or webhook events.
+
+```bash
+openclaw plugins install npm:@xquik/tweetclaw
+```
+
+Citedy remains responsible for topic selection, writing, social adaptations,
+publishing, scheduling, webhooks, and analytics. Keep TweetClaw write-like
+actions such as posts, replies, DMs, follows, media uploads, monitor creation,
+and giveaway draws in the TweetClaw/OpenClaw approval flow, and do not paste
+API keys, cookies, browser profiles, or raw session material into prompts,
+logs, issues, or commits.
+
 ## Full Capabilities
 
 | Feature                           | Credits             |

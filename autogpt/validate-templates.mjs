@@ -41,6 +41,22 @@ function actionKey(method, actionPath) {
   return `${method.toUpperCase()} ${actionPath}`;
 }
 
+function actionDiscriminator(action) {
+  const payload = action?.payload_example;
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+    return null;
+  }
+
+  for (const key of ["action", "status"]) {
+    const value = payload[key];
+    if (typeof value === "string" && value.length > 0) {
+      return `${key}=${value}`;
+    }
+  }
+
+  return null;
+}
+
 function ensureGraph(filePath, graph) {
   if (!graph || typeof graph !== "object") {
     fail(`Graph is not an object: ${filePath}`);
@@ -170,13 +186,25 @@ if (actions && Array.isArray(actions.actions)) {
     }
 
     const key = actionKey(method, actionPath);
-    const ids = seenActionKeys.get(key) || [];
-    ids.push(id || "<no-id>");
-    seenActionKeys.set(key, ids);
+    const entries = seenActionKeys.get(key) || [];
+    entries.push({
+      id: id || "<no-id>",
+      discriminator: actionDiscriminator(action),
+    });
+    seenActionKeys.set(key, entries);
   }
 
-  for (const [key, ids] of seenActionKeys.entries()) {
-    if (ids.length > 1) {
+  for (const [key, entries] of seenActionKeys.entries()) {
+    if (entries.length > 1) {
+      const discriminators = entries.map((entry) => entry.discriminator);
+      const hasDistinctVariants =
+        discriminators.every(Boolean) &&
+        new Set(discriminators).size === entries.length;
+      if (hasDistinctVariants) {
+        continue;
+      }
+
+      const ids = entries.map((entry) => entry.id);
       fail(
         `actions.json has duplicate action endpoint '${key}' for ids: ${ids.join(", ")}`,
       );
