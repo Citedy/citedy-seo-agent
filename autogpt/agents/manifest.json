@@ -5,7 +5,7 @@
       "id": "citedy-topic-to-publish",
       "file": "citedy-topic-to-publish.agent.json",
       "name": "Citedy Topic to Publish",
-      "description": "Turn any topic into a complete, SEO-optimized article with optional AI illustrations and voice-over — all in one automated step (15-48 credits). Handles research, structure, internal linking, and publishing.",
+      "description": "Turn any topic into a complete, SEO-optimized article with optional AI illustrations and voice-over - all in one automated step (15-48 credits). Handles research, structure, internal linking, and publishing.",
       "endpoint": "https://www.citedy.com/api/agent/autopilot",
       "method": "POST"
     },
@@ -13,7 +13,7 @@
       "id": "citedy-url-to-publish",
       "file": "citedy-url-to-publish.agent.json",
       "name": "Citedy URL to Publish",
-      "description": "Feed one or more source URLs — web articles, competitor pages, research — and get a fresh, SEO-optimized article ready to publish. Repurpose what already works.",
+      "description": "Feed one or more source URLs - web articles, competitor pages, research - and get a fresh, SEO-optimized article ready to publish. Repurpose what already works.",
       "endpoint": "https://www.citedy.com/api/agent/autopilot",
       "method": "POST"
     },
@@ -21,7 +21,7 @@
       "id": "citedy-turbo-article",
       "file": "citedy-turbo-article.agent.json",
       "name": "Citedy Turbo Article",
-      "description": "Generate a fully optimized SEO article from a single keyword for just 2-4 credits — the fastest, most affordable path from idea to published content. Ideal for high-volume operations.",
+      "description": "Generate a fully optimized SEO article from a single keyword for just 2-4 credits - the fastest, most affordable path from idea to published content. Ideal for high-volume operations.",
       "endpoint": "https://www.citedy.com/api/agent/autopilot",
       "method": "POST"
     },
@@ -61,7 +61,7 @@
       "id": "citedy-micro-post",
       "file": "citedy-micro-post.agent.json",
       "name": "Citedy Micro-Post",
-      "description": "Generate concise, platform-native social posts from any topic or article in seconds — optimized for engagement on X, LinkedIn, and beyond.",
+      "description": "Generate concise, platform-native social posts from any topic or article in seconds - optimized for engagement on X, LinkedIn, and beyond.",
       "endpoint": "https://www.citedy.com/api/agent/post",
       "method": "POST"
     },
@@ -69,7 +69,7 @@
       "id": "citedy-lead-magnet",
       "file": "citedy-lead-magnet.agent.json",
       "name": "Citedy Lead Magnet",
-      "description": "Produce downloadable PDF lead magnets — checklists, swipe files, or strategic frameworks — from any topic (30-100 credits). Ready to gate behind a signup form.",
+      "description": "Produce downloadable PDF lead magnets - checklists, swipe files, or strategic frameworks - from any topic (30-100 credits). Ready to gate behind a signup form.",
       "endpoint": "https://www.citedy.com/api/agent/lead-magnets",
       "method": "POST"
     },
@@ -77,8 +77,80 @@
       "id": "citedy-ingest",
       "file": "citedy-ingest.agent.json",
       "name": "Citedy Content Ingestion",
-      "description": "Feed any URL — YouTube video, web article, PDF, or audio file — and receive clean, structured content extracted and ready for repurposing (1-55 credits).",
+      "description": "Feed any URL - YouTube video, web article, PDF, or audio file - and receive clean, structured content extracted and ready for repurposing (1-55 credits).",
       "endpoint": "https://www.citedy.com/api/agent/ingest",
+      "method": "POST"
+    },
+    {
+      "id": "citedy-product-upload",
+      "file": "citedy-product-upload.agent.json",
+      "name": "Citedy Product Knowledge",
+      "description": "Upload product knowledge for context-aware content generation.",
+      "endpoint": "https://www.citedy.com/api/agent/products",
+      "method": "POST"
+    },
+    {
+      "id": "citedy-publish",
+      "file": "citedy-publish.agent.json",
+      "name": "Citedy Publish",
+      "description": "Publish or schedule a social adaptation.",
+      "endpoint": "https://www.citedy.com/api/agent/publish",
+      "method": "POST"
+    },
+    {
+      "id": "citedy-scout-to-publish",
+      "file": "citedy-scout-to-publish.agent.json",
+      "name": "Citedy Scout to Publish",
+      "description": "Discover topics before autopilot generation.",
+      "endpoint": "https://www.citedy.com/api/agent/scout/x",
+      "method": "POST"
+    },
+    {
+      "id": "citedy-session-manager",
+      "file": "citedy-session-manager.agent.json",
+      "name": "Citedy Session Manager",
+      "description": "Create a recurring automated content session.",
+      "endpoint": "https://www.citedy.com/api/agent/session",
+      "method": "POST"
+    },
+    {
+      "id": "citedy-shorts-avatar",
+      "file": "citedy-shorts-avatar.agent.json",
+      "name": "Citedy Shorts Avatar",
+      "description": "Generate an AI avatar image for short-form video.",
+      "endpoint": "https://www.citedy.com/api/agent/shorts/avatar",
+      "method": "POST"
+    },
+    {
+      "id": "citedy-shorts-merge",
+      "file": "citedy-shorts-merge.agent.json",
+      "name": "Citedy Shorts Merge",
+      "description": "Merge video segments with professional subtitles.",
+      "endpoint": "https://www.citedy.com/api/agent/shorts/merge",
+      "method": "POST"
+    },
+    {
+      "id": "citedy-shorts-script",
+      "file": "citedy-shorts-script.agent.json",
+      "name": "Citedy Shorts Script",
+      "description": "Generate a speech script for short-form video.",
+      "endpoint": "https://www.citedy.com/api/agent/shorts/script",
+      "method": "POST"
+    },
+    {
+      "id": "citedy-shorts-video",
+      "file": "citedy-shorts-video.agent.json",
+      "name": "Citedy Shorts Video",
+      "description": "Generate an AI video segment for short-form content.",
+      "endpoint": "https://www.citedy.com/api/agent/shorts",
+      "method": "POST"
+    },
+    {
+      "id": "citedy-webhook-register",
+      "file": "citedy-webhook-register.agent.json",
+      "name": "Citedy Webhook Register",
+      "description": "Register a webhook endpoint for event notifications.",
+      "endpoint": "https://www.citedy.com/api/agent/webhooks",
       "method": "POST"
     }
   ]
